@@ -23,6 +23,12 @@ class Patient(BaseModel):
             raise ValueError('not in valid domain ')
         return value
     
+    # this is used to return the value in uppercase 
+    @field_validator('name')
+    @classmethod
+    def transform_name(cls, value):
+        return value.upper()
+    
 def update_patient_data(patient: Patient):
     print(patient.name)
     print(patient.age)
@@ -32,7 +38,7 @@ def update_patient_data(patient: Patient):
     
 patient_info = {
     'name':'Alen', 
-    'email':'abc@doman.com', 
+    'email':'abc@domain.com', 
     'age': 24, 
     'weight':89, 
     'married': True, 
