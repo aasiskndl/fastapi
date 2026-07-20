@@ -29,6 +29,18 @@ class Patient(BaseModel):
     def transform_name(cls, value):
         return value.upper()
     
+    @field_validator('age', mode= 'after')  # this is 'after' by default wew can change it 
+    # the main functionality is that it automatically type converts it before performing any operation 
+    #mode="before": Runs the validator before Pydantic validates or type-converts the input.
+    #mode="after": Runs the validator after Pydantic validates and type-converts the input.
+    @classmethod
+    def validate_age(cls, value):
+        if 0 < value < 100:
+            return value
+        else:
+            raise ValueError('Age should be in between 0 and 100')
+    
+    
 def update_patient_data(patient: Patient):
     print(patient.name)
     print(patient.age)
