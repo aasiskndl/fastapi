@@ -6,11 +6,7 @@ def load_data():
     with open('data.json', 'r') as f:
         data = json.load(f)
     return data
-
-@app.get("/")
-def Hello():
-    return {'message':'Hello this is the main page'}
-
+ 
 @app.get("/about")
 def about():
     return {'message': 'This is about section '}
