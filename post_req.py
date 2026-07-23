@@ -41,6 +41,9 @@ def load_data():
         
     return data
 
+def save_data(data):
+    with open('data1.json', 'w') as f:
+        json.dump(data)
 
 @app.get('/')
 def hello():
