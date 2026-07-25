@@ -1,4 +1,5 @@
 from fastapi import FastAPI, Path, HTTPException, Query
+from fastapi.responses import JSONResponse
 from pydantic import BaseModel, Field, computed_field
 from typing import Annotated, Literal
 
@@ -43,7 +44,7 @@ def load_data():
 
 def save_data(data):
     with open('data1.json', 'w') as f:
-        json.dump(data)
+        json.dump(data, f)
 
 @app.get('/')
 def hello():
@@ -98,6 +99,10 @@ def create_patient(patient: Patient):
     
     #if the patient data does not exist in the database, then add the new patients data
     data[patient.id] = patient.model_dump(exclude=["id"])
+    
+    save_data(data)
+    
+    return JSONResponse(status_code=201, content={'message':'Patient created sucessfully'})
     
     
 
