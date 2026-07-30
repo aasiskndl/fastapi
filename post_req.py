@@ -45,13 +45,13 @@ class PatientUpdate(BaseModel):
         
         
 def load_data():
-    with open('data1.json', 'r') as f:
+    with open('patients.json', 'r') as f:
         data = json.load(f)
         
     return data
 
 def save_data(data):
-    with open('data1.json', 'w') as f:
+    with open('patients.json', 'w') as f:
         json.dump(data, f)
 
 @app.get('/')
@@ -126,3 +126,20 @@ def update_patients(patient_id: str, patient_update: PatientUpdate):
     existing_patient_info = data[patient_id]
     
     updated_patient_info= patient_update.model_dump(exclude_unset=True)
+    
+    for key, value in updated_patient_info.items():
+        existing_patient_info[key] = value
+    
+    # changing existing_patient_info into pydantic object 
+    existing_patient_info['id'] = patient_id
+    patient_pydantic_obj = Patient(**existing_patient_info)
+    
+    existing_patient_info = patient_pydantic_obj.model_dump(exclude='id')
+    
+    #adding the dictonary to data
+    data['patient_id'] = existing_patient_info
+    
+    #save the data
+    save_data(data)
+    
+    return JSONResponse(status_code=200, content={'message':'Patient updated sucessfully'})
