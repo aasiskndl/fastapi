@@ -13,7 +13,7 @@ class Patient(BaseModel):
     name: Annotated[str, Field(..., description="Name of the patient")]
     city: Annotated[str, Field(..., description='Name of the city patient is living')]
     age: Annotated[int, Field(..., gt=0, lt=120, description='Age of the patient')]
-    gender: Annotated[Literal['Male', 'Female', 'Others'], Field(..., description="Gender of the patient")]
+    gender: Annotated[Literal['male', 'female', 'others'], Field(..., description="Gender of the patient")]
     height: Annotated[float, Field(..., gt=0, description='Height of the patient in Meters')]
     weight: Annotated[float, Field(..., gt=0, description="Weight of the patient in KG")]
     
@@ -38,8 +38,8 @@ class Patient(BaseModel):
 class PatientUpdate(BaseModel):
     name: Annotated[Optional[str], Field(default=None)]
     city: Annotated[Optional[str], Field(default=None)]
-    age: Annotated[Optional[str], Field(default=None, gt=0)]
-    gender: Annotated[Optional[Literal['male','female']], Field(default=None)]
+    age: Annotated[Optional[int], Field(default=None, gt=0)]
+    gender: Annotated[Optional[Literal['male', 'female', 'others']], Field(default=None)]
     height: Annotated[Optional[float], Field(default=None, gt=0)]
     weight: Annotated[Optional[float], Field(default=None, gt=0)]
         
