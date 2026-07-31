@@ -137,9 +137,24 @@ def update_patients(patient_id: str, patient_update: PatientUpdate):
     existing_patient_info = patient_pydantic_obj.model_dump(exclude='id')
     
     #adding the dictonary to data
-    data['patient_id'] = existing_patient_info
+    data[patient_id] = existing_patient_info
     
     #save the data
     save_data(data)
     
     return JSONResponse(status_code=200, content={'message':'Patient updated sucessfully'})
+
+@app.delete('/delete/{patient_id}')
+def delete_patient(patient_id: str):
+    
+    #load data
+    data = load_data()
+    
+    if patient_id not in data:
+        return HTTPException(status_code=404, detail="Patient ID not found")
+    
+    del data[patient_id]
+    
+    save_data(data)
+    
+    return JSONResponse(status_code=200, content={'message':'Date deleted sucessfully'})
