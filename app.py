@@ -11,39 +11,14 @@ with open('model.pkl', 'rb') as f:
 
 app = FastAPI()
 
-tier_1_cities = [
-    "Kathmandu",
-    "Lalitpur",
-    "Bhaktapur",
-]
-
+tier_1_cities = ["Mumbai", "Delhi", "Bangalore", "Chennai", "Kolkata", "Hyderabad", "Pune"]
 tier_2_cities = [
-    "Pokhara",
-    "Bharatpur",
-    "Biratnagar",
-    "Birgunj",
-    "Butwal",
-    "Dharan",
-    "Hetauda",
-    "Nepalgunj",
-    "Dhangadhi",
-    "Janakpur",
-    "Itahari",
-    "Birtamod",
-    "Mechinagar",
-    "Damak",
-    "Lahan",
-    "Rajbiraj",
-    "Ghorahi",
-    "Tulsipur",
-    "Siddharthanagar",
-    "Kirtipur",
-    "Madhyapur Thimi",
-    "Budhanilkantha",
-    "Tokha",
-    "Gokarneshwar",
-    "Chandragiri",
-    "Kageshwori Manohara",
+    "Jaipur", "Chandigarh", "Indore", "Lucknow", "Patna", "Ranchi", "Visakhapatnam", "Coimbatore",
+    "Bhopal", "Nagpur", "Vadodara", "Surat", "Rajkot", "Jodhpur", "Raipur", "Amritsar", "Varanasi",
+    "Agra", "Dehradun", "Mysore", "Jabalpur", "Guwahati", "Thiruvananthapuram", "Ludhiana", "Nashik",
+    "Allahabad", "Udaipur", "Aurangabad", "Hubli", "Belgaum", "Salem", "Vijayawada", "Tiruchirappalli",
+    "Bhavnagar", "Gwalior", "Dhanbad", "Bareilly", "Aligarh", "Gaya", "Kozhikode", "Warangal",
+    "Kolhapur", "Bilaspur", "Jalandhar", "Noida", "Guntur", "Asansol", "Siliguri"
 ]
 
 #pydantic model to validate incomming data
@@ -96,7 +71,7 @@ class UserInput(BaseModel):
 def predict_premium(data: UserInput):
     input_df = pd.DataFrame([{
         'bmi': data.bmi,
-        'age': data.age_group,
+        'age_group': data.age_group,
         'lifestyle_risk': data.lifestyle_risk,
         'city_tier': data.city_tier,
         'income_lpa': data.income_lpa,
